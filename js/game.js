@@ -22,6 +22,7 @@ loadSprite('Play_Pushed', './assets/sprites/Play_Pushed.png');
 
 loadSound('begin', './assets/sounds/sfx_sound_nagger2.wav');
 
+loadSound('landing', './assets/sounds/sfx_movement_jump13_landing.wav');
 loadSound('jump1', './assets/sounds/jump/sfx_movement_jump1.wav');
 loadSound('jump2', './assets/sounds/jump/sfx_movement_jump2.wav');
 loadSound('jump3', './assets/sounds/jump/sfx_movement_jump3.wav');
@@ -82,6 +83,7 @@ scene('game', () => {
 	// * SUELO
 	add([rect(width() + 32, FLOOR_HEIGHT + 32), pos(-32, height() - FLOOR_HEIGHT), area(), solid(), color(14, 0, 40), 'ground']);
 	catPlayer.on('ground', () => {
+		play('landing');
 		catPlayer.play('run');
 	});
 
@@ -148,4 +150,4 @@ scene('secret', () => {
 	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
-go('game');
+go('menu');
