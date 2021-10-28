@@ -5,13 +5,13 @@ import kaboom from 'https://unpkg.com/kaboom/dist/kaboom.mjs';
 kaboom();
 
 // * CARGAR SPRITES
-loadSprite('Cat', '/assets/sprites/Cat.png');
-loadSprite('CatFront', '/assets/sprites/CatFront.png');
-loadSprite('Ghost', '/assets/sprites/Ghost.gif');
-loadSprite('Heart', '/assets/sprites/Heart.png');
+loadSprite('Cat', './assets/sprites/Cat.png');
+loadSprite('CatFront', './assets/sprites/CatFront.png');
+loadSprite('Ghost', './assets/sprites/Ghost.gif');
+loadSprite('Heart', './assets/sprites/Heart.png');
 
-loadSprite('Play_Idle', '/assets/sprites/Play_Idle.png');
-loadSprite('Play_Pushed', '/assets/sprites/Play_Pushed.png');
+loadSprite('Play_Idle', './assets/sprites/Play_Idle.png');
+loadSprite('Play_Pushed', './assets/sprites/Play_Pushed.png');
 
 loadSound('begin', './assets/sounds/sfx_sound_nagger2.wav');
 
