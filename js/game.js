@@ -10,16 +10,16 @@ loadSprite('CatFront', 'sprites/CatFront.png');
 loadSprite('Ghost', 'sprites/Ghost.gif');
 loadSprite('Heart', 'sprites/Heart.png');
 
-loadSound('begin', '/assets/sounds/sfx_sound_nagger2.wav');
+loadSound('begin', './assets/sounds/sfx_sound_nagger2.wav');
 
-loadSound('jump1', '/assets/sounds/jump/sfx_movement_jump1.wav');
-loadSound('jump2', '/assets/sounds/jump/sfx_movement_jump2.wav');
-loadSound('jump3', '/assets/sounds/jump/sfx_movement_jump3.wav');
-loadSound('jump4', '/assets/sounds/jump/sfx_movement_jump4.wav');
-loadSound('jump5', '/assets/sounds/jump/sfx_movement_jump5.wav');
-loadSound('jump6', '/assets/sounds/jump/sfx_movement_jump6.wav');
+loadSound('jump1', './assets/sounds/jump/sfx_movement_jump1.wav');
+loadSound('jump2', './assets/sounds/jump/sfx_movement_jump2.wav');
+loadSound('jump3', './assets/sounds/jump/sfx_movement_jump3.wav');
+loadSound('jump4', './assets/sounds/jump/sfx_movement_jump4.wav');
+loadSound('jump5', './assets/sounds/jump/sfx_movement_jump5.wav');
+loadSound('jump6', './assets/sounds/jump/sfx_movement_jump6.wav');
 
-loadSound('hit', '/assets/sounds/sfx_sounds_damage1.wav');
+loadSound('hit', './assets/sounds/sfx_sounds_damage1.wav');
 
 // * CARGAR SONIDOS
 
