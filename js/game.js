@@ -36,7 +36,7 @@ scene('game', () => {
 		if (catPlayer.grounded()) {
 			catPlayer.jump();
 
-			play(`jump${parseInt(rand(1, 6))}`);
+			play(`jump${randi(1, 6)}`);
 		}
 	};
 
