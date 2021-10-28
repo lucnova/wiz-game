@@ -5,8 +5,15 @@ import kaboom from 'https://unpkg.com/kaboom/dist/kaboom.mjs';
 kaboom();
 
 // * CARGAR SPRITES
-loadSprite('Cat', './assets/sprites/Cat.png');
-loadSprite('CatFront', './assets/sprites/CatFront.png');
+//loadSprite('Cat', './assets/sprites/Cat.png');
+loadSprite('Cat', './assets/sprites/CatWalk.png', {
+	sliceX: 4,
+	anims: {
+		run: { from: 0, to: 3, loop: true, speed: 16 },
+		jump: { from: 1, to: 1 },
+	},
+});
+loadSprite('CatBack', './assets/sprites/CatBack.png');
 loadSprite('Ghost', './assets/sprites/Ghost.gif');
 loadSprite('Heart', './assets/sprites/Heart.png');
 
@@ -48,6 +55,7 @@ scene('game', () => {
 
 	const catJump = () => {
 		if (catPlayer.grounded()) {
+			catPlayer.play('jump');
 			catPlayer.jump();
 
 			play(`jump${randi(1, 6)}`);
@@ -72,7 +80,10 @@ scene('game', () => {
 	});
 
 	// * SUELO
-	add([rect(width() + 32, FLOOR_HEIGHT + 32), pos(-32, height() - FLOOR_HEIGHT), area(), solid(), color(14, 0, 40)]);
+	add([rect(width() + 32, FLOOR_HEIGHT + 32), pos(-32, height() - FLOOR_HEIGHT), area(), solid(), color(14, 0, 40), 'ground']);
+	catPlayer.on('ground', () => {
+		catPlayer.play('run');
+	});
 
 	// * FANTASMAS
 	const spawnGhost = () => {
@@ -101,7 +112,7 @@ scene('lose', () => {
 		go('menu');
 	});
 
-	add([sprite('CatFront'), pos(width() / 2 - 115, height() / 2 + 32), area(), scale(10), 'catto']);
+	add([sprite('CatBack'), pos(width() / 2 - 115, height() / 2 + 32), area(), scale(10), 'catto']);
 	add([text(':('), pos(center()), origin('center')]);
 });
 
@@ -137,4 +148,4 @@ scene('secret', () => {
 	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
-go('menu');
+go('game');
