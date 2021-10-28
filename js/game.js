@@ -150,4 +150,6 @@ scene('secret', () => {
 	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
+console.log('')
+
 go('menu');
