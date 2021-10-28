@@ -9,10 +9,14 @@ loadSprite('Cat', 'sprites/Cat.png');
 loadSprite('CatFront', 'sprites/CatFront.png');
 loadSprite('Ghost', 'sprites/Ghost.gif');
 
+const FLOOR_HEIGHT = 48;
+const JUMP_FORCE = 1024;
+const GHOST_SPEED = 480;
+
 // * ESCENA DEL JUEGO INICIAL
 scene('game', () => {
 	// * GATO
-	const catPlayer = add([sprite('Cat'), pos(80, 40), area(), scale(3), body({ jumpForce: 1024 })]);
+	const catPlayer = add([sprite('Cat'), pos(80, 40), area(), scale(3), body({ jumpForce: JUMP_FORCE })]);
 	keyPress('space', () => {
 		if (catPlayer.grounded()) {
 			catPlayer.jump();
@@ -25,11 +29,19 @@ scene('game', () => {
 	});
 
 	// * SUELO
-	add([rect(width() + 32, 48 + 32), pos(-32, height() - 48), area(), solid(), color(14, 0, 40)]);
+	add([rect(width() + 32, FLOOR_HEIGHT + 32), pos(-32, height() - FLOOR_HEIGHT), area(), solid(), color(14, 0, 40)]);
 
 	// * FANTASMAS
 	const spawnGhost = () => {
-		add([sprite('Ghost'), scale(2.5), area(), pos(width(), height() - 48), origin('botleft'), move(LEFT, 400), 'Ghost']);
+		add([
+			sprite('Ghost'),
+			scale(2.5),
+			area(),
+			pos(width(), height() - FLOOR_HEIGHT),
+			origin('botleft'),
+			move(LEFT, GHOST_SPEED),
+			'Ghost',
+		]);
 
 		wait(rand(1, 3), () => {
 			spawnGhost();
