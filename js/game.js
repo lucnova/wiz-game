@@ -22,6 +22,11 @@ scene('game', () => {
 			catPlayer.jump();
 		}
 	});
+	mouseDown(() => {
+		if (catPlayer.grounded()) {
+			catPlayer.jump();
+		}
+	});
 	catPlayer.collides('Ghost', () => {
 		addKaboom(catPlayer.pos);
 		shake();
