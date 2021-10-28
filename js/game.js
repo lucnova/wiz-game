@@ -21,6 +21,8 @@ loadSound('jump6', './assets/sounds/jump/sfx_movement_jump6.wav');
 
 loadSound('hit', './assets/sounds/sfx_sounds_damage1.wav');
 
+loadSound('powerup', './assets/sounds/sfx_sounds_powerup13.wav');
+
 // * CARGAR SONIDOS
 
 const FLOOR_HEIGHT = 64;
@@ -98,6 +100,10 @@ scene('secret', () => {
 	add([text('Te amo'), pos(width() / 2, height() / 2 - 50), origin('center')]);
 	add([text('mucho'), pos(width() / 2, height() / 2), origin('center')]);
 	add([text('Cassandra'), pos(width() / 2, height() / 2 + 50), origin('center')]);
+	shake();
+	wait(0.02, () => {
+		play('powerup');
+	});
 
 	clicks('heart', () => {
 		go('lose');
@@ -106,4 +112,4 @@ scene('secret', () => {
 	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
-go('game');
+go('secret');
