@@ -6,34 +6,41 @@ kaboom();
 
 // * CARGAR SPRITES
 loadSprite('Cat', 'sprites/Cat.png');
+loadSprite('CatFront', 'sprites/CatFront.png');
 loadSprite('Ghost', 'sprites/Ghost.gif');
 
 // * ESCENA DEL JUEGO INICIAL
 scene('game', () => {
-	// * COOLSPOT
-	const coolSpot = add([sprite('Cat'), pos(80, 40), area(), scale(3), body({ jumpForce: 1024 })]);
+	// * GATO
+	const catPlayer = add([sprite('Cat'), pos(80, 40), area(), scale(3), body({ jumpForce: 1024 })]);
 	keyPress('space', () => {
-		if (coolSpot.grounded()) {
-			coolSpot.jump();
+		if (catPlayer.grounded()) {
+			catPlayer.jump();
 		}
 	});
-	coolSpot.collides('Ghost', () => {
-		addKaboom(coolSpot.pos);
+	catPlayer.collides('Ghost', () => {
+		addKaboom(catPlayer.pos);
 		shake();
+		go('lose');
 	});
 
 	// * SUELO
 	add([rect(width() + 32, 48 + 32), pos(-32, height() - 48), area(), solid(), color(14, 0, 40)]);
 
-	// * CANGREJOS
-	const spawnCrab = () => {
+	// * FANTASMAS
+	const spawnGhost = () => {
 		add([sprite('Ghost'), scale(2.5), area(), pos(width(), height() - 48), origin('botleft'), move(LEFT, 400), 'Ghost']);
 
 		wait(rand(1, 3), () => {
-			spawnCrab();
+			spawnGhost();
 		});
 	};
-	spawnCrab();
+	spawnGhost();
+});
+
+scene('lose', () => {
+	add([sprite('CatFront'), pos(width() / 2 - 115, height() / 2 + 32), scale(10)]);
+	add([text(':('), pos(center()), origin('center')]);
 });
 
 go('game');
