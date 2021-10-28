@@ -9,28 +9,50 @@ loadSprite('Cat', 'sprites/Cat.png');
 loadSprite('CatFront', 'sprites/CatFront.png');
 loadSprite('Ghost', 'sprites/Ghost.gif');
 
+loadSound('begin', '/assets/sounds/sfx_sound_nagger2.wav');
+
+loadSound('jump1', '/assets/sounds/jump/sfx_movement_jump1.wav');
+loadSound('jump2', '/assets/sounds/jump/sfx_movement_jump2.wav');
+loadSound('jump3', '/assets/sounds/jump/sfx_movement_jump3.wav');
+loadSound('jump4', '/assets/sounds/jump/sfx_movement_jump4.wav');
+loadSound('jump5', '/assets/sounds/jump/sfx_movement_jump5.wav');
+loadSound('jump6', '/assets/sounds/jump/sfx_movement_jump6.wav');
+
+loadSound('hit', '/assets/sounds/sfx_sounds_damage1.wav');
+
+// * CARGAR SONIDOS
+
 const FLOOR_HEIGHT = 64;
 const JUMP_FORCE = 1024;
 const GHOST_SPEED = 380;
 
 // * ESCENA DEL JUEGO INICIAL
 scene('game', () => {
+	play('begin');
 	// * GATO
 	const catPlayer = add([sprite('Cat'), pos(32, height() / 2), area(), scale(3), body({ jumpForce: JUMP_FORCE, weight: 1.5 })]);
-	keyPress('space', () => {
+
+	const catJump = () => {
 		if (catPlayer.grounded()) {
 			catPlayer.jump();
+
+			play(`jump${parseInt(rand(1, 6))}`);
 		}
+	};
+
+	keyPress('space', () => {
+		catJump();
 	});
 	mouseDown(() => {
-		if (catPlayer.grounded()) {
-			catPlayer.jump();
-		}
+		catJump();
 	});
 	catPlayer.collides('Ghost', () => {
-		addKaboom(catPlayer.pos);
+		play('hit');
 		shake();
-		go('lose');
+
+		wait(0.1, () => {
+			go('lose');
+		});
 	});
 
 	// * SUELO
