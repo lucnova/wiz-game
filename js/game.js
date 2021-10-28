@@ -8,6 +8,7 @@ kaboom();
 loadSprite('Cat', 'sprites/Cat.png');
 loadSprite('CatFront', 'sprites/CatFront.png');
 loadSprite('Ghost', 'sprites/Ghost.gif');
+loadSprite('Heart', 'sprites/Heart.png');
 
 loadSound('begin', '/assets/sounds/sfx_sound_nagger2.wav');
 
@@ -81,12 +82,28 @@ scene('game', () => {
 });
 
 scene('lose', () => {
-	add([sprite('CatFront'), pos(width() / 2 - 115, height() / 2 + 32), scale(10)]);
-	add([text(':('), pos(center()), origin('center')]);
-
-	mouseDown(() => {
+	clicks('heart', () => {
+		go('secret');
+	});
+	clicks('catto', () => {
 		go('game');
 	});
+
+	add([sprite('CatFront'), pos(width() / 2 - 115, height() / 2 + 32), area(), scale(10), 'catto']);
+	add([sprite('Heart'), pos(width() - 32, height() - 32), area(), scale(2), 'heart']);
+	add([text(':('), pos(center()), origin('center')]);
+});
+
+scene('secret', () => {
+	add([text('Te amo'), pos(width() / 2, height() / 2 - 50), origin('center')]);
+	add([text('mucho'), pos(width() / 2, height() / 2), origin('center')]);
+	add([text('Cassandra'), pos(width() / 2, height() / 2 + 50), origin('center')]);
+
+	clicks('heart', () => {
+		go('lose');
+	});
+
+	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
 go('game');
