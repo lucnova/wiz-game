@@ -17,29 +17,29 @@
 		kaboom();
 
 		// * CARGAR SPRITES
-		loadSprite('spot', 'sprites/spot.png');
-		loadSprite('crab', 'sprites/crab.png');
+		loadSprite('Cat', 'sprites/Cat.png');
+		loadSprite('Ghost', 'sprites/Ghost.gif');
 
 		// * ESCENA DEL JUEGO INICIAL
 		scene('game', () => {
 			// * COOLSPOT
-			const coolSpot = add([sprite('spot'), pos(80, 40), area(), scale(2), body({ jumpForce: 1024 })]);
+			const coolSpot = add([sprite('Cat'), pos(80, 40), area(), scale(3), body({ jumpForce: 1024 })]);
 			keyPress('space', () => {
 				if (coolSpot.grounded()) {
 					coolSpot.jump();
 				}
 			});
-			coolSpot.collides('crab', () => {
+			coolSpot.collides('Ghost', () => {
 				addKaboom(coolSpot.pos);
 				shake();
 			});
 
 			// * SUELO
-			add([rect(width() + 32, 48 + 32), pos(-32, height() - 48), area(), solid(), color(255, 229, 204)]);
+			add([rect(width() + 32, 48 + 32), pos(-32, height() - 48), area(), solid(), color(14, 0, 40)]);
 
 			// * CANGREJOS
 			const spawnCrab = () => {
-				add([sprite('crab'), scale(2), area(), pos(width(), height() - 48), origin('botleft'), move(LEFT, 240), 'crab']);
+				add([sprite('Ghost'), scale(2.5), area(), pos(width(), height() - 48), origin('botleft'), move(LEFT, 400), 'Ghost']);
 
 				wait(rand(1, 3), () => {
 					spawnCrab();
