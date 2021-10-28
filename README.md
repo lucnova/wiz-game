@@ -17,6 +17,7 @@ The easiest way is to install and use [http-server](https://www.npmjs.com/packag
 Sprites gotten from:
 
 [Cat Sprites](https://pipoya.itch.io/pipoya-free-rpg-character-sprites-nekonin) by ppeldo
+
 [Halloween Monsters](https://motionsorcery.itch.io/2d-animated-halloween-characters) by MotionSorcery
 
 Check them out.
