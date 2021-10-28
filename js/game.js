@@ -52,7 +52,10 @@ scene('game', () => {
 			spawnGhost();
 		});
 	};
-	spawnGhost();
+
+	wait(3, () => {
+		spawnGhost();
+	});
 });
 
 scene('lose', () => {
