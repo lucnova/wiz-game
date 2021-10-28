@@ -5,10 +5,13 @@ import kaboom from 'https://unpkg.com/kaboom/dist/kaboom.mjs';
 kaboom();
 
 // * CARGAR SPRITES
-loadSprite('Cat', 'sprites/Cat.png');
-loadSprite('CatFront', 'sprites/CatFront.png');
-loadSprite('Ghost', 'sprites/Ghost.gif');
-loadSprite('Heart', 'sprites/Heart.png');
+loadSprite('Cat', '/assets/sprites/Cat.png');
+loadSprite('CatFront', '/assets/sprites/CatFront.png');
+loadSprite('Ghost', '/assets/sprites/Ghost.gif');
+loadSprite('Heart', '/assets/sprites/Heart.png');
+
+loadSprite('Play_Idle', '/assets/sprites/Play_Idle.png');
+loadSprite('Play_Pushed', '/assets/sprites/Play_Pushed.png');
 
 loadSound('begin', './assets/sounds/sfx_sound_nagger2.wav');
 
@@ -22,6 +25,7 @@ loadSound('jump6', './assets/sounds/jump/sfx_movement_jump6.wav');
 loadSound('hit', './assets/sounds/sfx_sounds_damage1.wav');
 
 loadSound('powerup', './assets/sounds/sfx_sounds_powerup13.wav');
+loadSound('aww', './assets/sounds/CrowdAww.wav');
 
 // * CARGAR SONIDOS
 
@@ -33,7 +37,14 @@ const GHOST_SPEED = 380;
 scene('game', () => {
 	play('begin');
 	// * GATO
-	const catPlayer = add([sprite('Cat'), pos(32, height() / 2), area(), scale(3), body({ jumpForce: JUMP_FORCE, weight: 1.5 })]);
+	const catPlayer = add([
+		sprite('Cat'),
+		pos(32, height() / 2),
+		area(),
+		scale(3),
+		body({ jumpForce: JUMP_FORCE, weight: 1.5 }),
+		health(3),
+	]);
 
 	const catJump = () => {
 		if (catPlayer.grounded()) {
@@ -50,9 +61,11 @@ scene('game', () => {
 		catJump();
 	});
 	catPlayer.collides('Ghost', () => {
+		catPlayer.hurt(1);
 		play('hit');
 		shake();
-
+	});
+	catPlayer.on('death', () => {
 		wait(0.1, () => {
 			go('lose');
 		});
@@ -84,32 +97,44 @@ scene('game', () => {
 });
 
 scene('lose', () => {
-	clicks('heart', () => {
-		go('secret');
-	});
 	clicks('catto', () => {
-		go('game');
+		go('menu');
 	});
 
 	add([sprite('CatFront'), pos(width() / 2 - 115, height() / 2 + 32), area(), scale(10), 'catto']);
-	add([sprite('Heart'), pos(width() - 32, height() - 32), area(), scale(2), 'heart']);
 	add([text(':('), pos(center()), origin('center')]);
 });
 
-scene('secret', () => {
-	add([text('Te amo'), pos(width() / 2, height() / 2 - 50), origin('center')]);
-	add([text('mucho'), pos(width() / 2, height() / 2), origin('center')]);
-	add([text('Cassandra'), pos(width() / 2, height() / 2 + 50), origin('center')]);
+scene('menu', () => {
+	add([text('Wiz'), pos(width() / 2, height() / 2 - 50), origin('center')]);
 	shake();
 	wait(0.02, () => {
 		play('powerup');
 	});
 
+	clicks('play_button', () => {
+		go('game');
+	});
 	clicks('heart', () => {
-		go('lose');
+		go('secret');
+	});
+
+	add([sprite('Heart'), pos(width() / 2, height() / 2 + 256), origin('center'), area(), scale(2), 'heart']);
+	add([sprite('Play_Idle'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(2), 'play_button']);
+});
+
+scene('secret', () => {
+	play('aww');
+	add([text('Te amo'), pos(width() / 2, height() / 2 - 50), origin('center')]);
+	add([text('mucho'), pos(width() / 2, height() / 2), origin('center')]);
+	add([text('Cassandra'), pos(width() / 2, height() / 2 + 50), origin('center')]);
+	shake();
+
+	clicks('heart', () => {
+		go('menu');
 	});
 
 	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
-go('secret');
+go('menu');
