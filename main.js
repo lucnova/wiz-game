@@ -1,45 +1,23 @@
 // Importar como modulo
 import kaboom from 'kaboom';
-
-// Inicializar contexto de Kaboom
-kaboom();
-
-// * CARGAR SPRITES
-//loadSprite('Cat', './assets/sprites/Cat.png');
-loadSprite('Cat', './assets/sprites/CatWalk.png', {
-	sliceX: 4,
-	anims: {
-		run: { from: 0, to: 3, loop: true, speed: 16 },
-		jump: { from: 1, to: 1 },
-	},
-});
-loadSprite('CatBack', './assets/sprites/CatBack.png');
-loadSprite('Ghost', './assets/sprites/Ghost.gif');
-loadSprite('Heart', './assets/sprites/Heart.png');
-
-loadSprite('Play_Idle', './assets/sprites/Play_Idle.png');
-loadSprite('Play_Pushed', './assets/sprites/Play_Pushed.png');
-
-loadSound('begin', './assets/sounds/sfx_sound_nagger2.wav');
-
-loadSound('landing', './assets/sounds/sfx_movement_jump13_landing.wav');
-loadSound('jump1', './assets/sounds/jump/sfx_movement_jump1.wav');
-loadSound('jump2', './assets/sounds/jump/sfx_movement_jump2.wav');
-loadSound('jump3', './assets/sounds/jump/sfx_movement_jump3.wav');
-loadSound('jump4', './assets/sounds/jump/sfx_movement_jump4.wav');
-loadSound('jump5', './assets/sounds/jump/sfx_movement_jump5.wav');
-loadSound('jump6', './assets/sounds/jump/sfx_movement_jump6.wav');
-
-loadSound('hit', './assets/sounds/sfx_sounds_damage1.wav');
-
-loadSound('powerup', './assets/sounds/sfx_sounds_powerup13.wav');
-loadSound('aww', './assets/sounds/CrowdAww.wav');
-
-// * CARGAR SONIDOS
+import { loadSprites } from './src/assets/utils/loadSprites';
+import { loadSounds } from './src/assets/utils/loadSounds.js';
 
 const FLOOR_HEIGHT = 64;
 const JUMP_FORCE = 1042;
 const GHOST_SPEED = 380;
+
+// Inicializar contexto de Kaboom
+kaboom({
+	global: true,
+	fullscreen: true
+});
+
+// * CARGAR SONIDOS
+loadSounds();
+
+// * CARGAR SPRITES
+loadSprites();
 
 // * ESCENA DEL JUEGO INICIAL
 scene('game', () => {
