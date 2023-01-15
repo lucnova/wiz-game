@@ -1,6 +1,5 @@
-// Importar como modulo
-import kaboom from 'kaboom';
-import { loadSprites } from './src/assets/utils/loadSprites';
+import kaboom from "https://unpkg.com/kaboom@2000.0.0/dist/kaboom.mjs";
+import { loadSprites } from './src/assets/utils/loadSprites.js';
 import { loadSounds } from './src/assets/utils/loadSounds.js';
 
 const FLOOR_HEIGHT = 64;
@@ -33,7 +32,7 @@ scene('game', () => {
 	]);
 
 	const catJump = () => {
-		if (catPlayer.isGrounded()) {
+		if (catPlayer.grounded()) {
 			catPlayer.play('jump');
 			catPlayer.jump();
 
@@ -41,13 +40,13 @@ scene('game', () => {
 		}
 	};
 
-	onKeyDown('space', () => {
+	keyDown('space', () => {
 		catJump();
 	});
-	onMouseDown(() => {
+	mouseDown(() => {
 		catJump();
 	});
-	catPlayer.onCollide('Ghost', () => {
+	catPlayer.collides('Ghost', () => {
 		catPlayer.hurt(1);
 		play('hit');
 		shake();
@@ -97,16 +96,9 @@ scene('lose', () => {
 	]);
 	add([text(':('), pos(center()), origin('center')]);
 
-	if (isTouch()) {
-		onTouchEnd((id, pos) => {
-			if (catto.hasPoint(pos)) go('menu');
-		});
-	}
-	else {
-		catto.onClick(() => {
-			go('menu');
-		});
-	}
+	catto.clicks(() => {
+		go('menu');
+	});
 });
 
 scene('menu', () => {
@@ -129,20 +121,12 @@ scene('menu', () => {
 		'heart'
 	]);
 
-	if (isTouch()) {
-		onTouchEnd((id, pos) => {
-			if (playBtn.hasPoint(pos)) go('game');
-			else if (heart.hasPoint(pos)) go('secret');
-		});
-	}
-	else {
-		playBtn.onClick(() => {
-			go('game');
-		});
-		heart.onClick(() => {
-			go('secret');
-		});
-	}
+	playBtn.clicks(() => {
+		go('game');
+	});
+	heart.clicks(() => {
+		go('secret');
+	});
 
 	shake();
 	wait(0.02, () => {
@@ -165,16 +149,9 @@ scene('secret', () => {
 	]);
 	shake();
 
-	if (isTouch()) {
-		onTouchEnd((id, pos) => {
-			if (heart.hasPoint(pos)) go('menu');
-		});
-	}
-	else {
-		heart.onClick(() => {
-			go('menu');
-		});
-	}
+	heart.clicks(() => {
+		go('menu');
+	});
 
 });
 
