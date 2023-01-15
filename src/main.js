@@ -1,5 +1,5 @@
 // Importar como modulo
-import kaboom from 'https://unpkg.com/kaboom/dist/kaboom.mjs';
+import kaboom from 'kaboom';
 
 // Inicializar contexto de Kaboom
 kaboom();
@@ -38,7 +38,7 @@ loadSound('aww', './assets/sounds/CrowdAww.wav');
 // * CARGAR SONIDOS
 
 const FLOOR_HEIGHT = 64;
-const JUMP_FORCE = 1024;
+const JUMP_FORCE = 1042;
 const GHOST_SPEED = 380;
 
 // * ESCENA DEL JUEGO INICIAL
@@ -55,7 +55,7 @@ scene('game', () => {
 	]);
 
 	const catJump = () => {
-		if (catPlayer.grounded()) {
+		if (catPlayer.isGrounded()) {
 			catPlayer.play('jump');
 			catPlayer.jump();
 
@@ -63,13 +63,13 @@ scene('game', () => {
 		}
 	};
 
-	keyPress('space', () => {
+	onKeyDown('space', () => {
 		catJump();
 	});
-	mouseDown(() => {
+	onMouseDown(() => {
 		catJump();
 	});
-	catPlayer.collides('Ghost', () => {
+	catPlayer.onCollide('Ghost', () => {
 		catPlayer.hurt(1);
 		play('hit');
 		shake();
@@ -110,30 +110,66 @@ scene('game', () => {
 });
 
 scene('lose', () => {
-	clicks('catto', () => {
-		go('menu');
-	});
-
-	add([sprite('CatBack'), pos(width() / 2 - 115, height() / 2 + 32), area(), scale(10), 'catto']);
+	const catto = add([
+		sprite('CatBack'),
+		pos(width() / 2 - 115, height() / 2 + 32),
+		area(),
+		scale(10),
+		'catto'
+	]);
 	add([text(':('), pos(center()), origin('center')]);
+
+	if (isTouch()) {
+		onTouchEnd((id, pos) => {
+			if (catto.hasPoint(pos)) go('menu');
+		});
+	}
+	else {
+		catto.onClick(() => {
+			go('menu');
+		});
+	}
 });
 
 scene('menu', () => {
 	add([text('Wiz'), pos(width() / 2, height() / 2 - 50), origin('center')]);
+
+	const playBtn = add([
+		sprite('Play_Idle'),
+		pos(width() / 2, height() / 2 + 128),
+		origin('center'),
+		area(),
+		scale(2),
+		'play_button'
+	]);
+	const heart = add([
+		sprite('Heart'),
+		pos(width() / 2, height() / 2 + 256),
+		origin('center'),
+		area(),
+		scale(2),
+		'heart'
+	]);
+
+	if (isTouch()) {
+		onTouchEnd((id, pos) => {
+			if (playBtn.hasPoint(pos)) go('game');
+			else if (heart.hasPoint(pos)) go('secret');
+		});
+	}
+	else {
+		playBtn.onClick(() => {
+			go('game');
+		});
+		heart.onClick(() => {
+			go('secret');
+		});
+	}
+
 	shake();
 	wait(0.02, () => {
 		play('powerup');
 	});
-
-	clicks('play_button', () => {
-		go('game');
-	});
-	clicks('heart', () => {
-		go('secret');
-	});
-
-	add([sprite('Heart'), pos(width() / 2, height() / 2 + 256), origin('center'), area(), scale(2), 'heart']);
-	add([sprite('Play_Idle'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(2), 'play_button']);
 });
 
 scene('secret', () => {
@@ -141,13 +177,27 @@ scene('secret', () => {
 	add([text('Te amo'), pos(width() / 2, height() / 2 - 50), origin('center')]);
 	add([text('mucho'), pos(width() / 2, height() / 2), origin('center')]);
 	add([text('Cassandra'), pos(width() / 2, height() / 2 + 50), origin('center')]);
+	const heart = add([
+		sprite('Heart'),
+		pos(width() / 2, height() / 2 + 128),
+		origin('center'),
+		area(),
+		scale(5),
+		'heart'
+	]);
 	shake();
 
-	clicks('heart', () => {
-		go('menu');
-	});
+	if (isTouch()) {
+		onTouchEnd((id, pos) => {
+			if (heart.hasPoint(pos)) go('menu');
+		});
+	}
+	else {
+		heart.onClick(() => {
+			go('menu');
+		});
+	}
 
-	add([sprite('Heart'), pos(width() / 2, height() / 2 + 128), origin('center'), area(), scale(5), 'heart']);
 });
 
 go('menu');
