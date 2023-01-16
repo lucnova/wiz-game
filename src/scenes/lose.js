@@ -1,5 +1,12 @@
 export const lose = () => {
 	scene('lose', () => {
+		add([
+			sprite('bg_0', {
+				width: width(),
+				height: height(),
+			}),
+			pos(0, 0),
+		]);
 		const catto = add([
 			sprite('CatBack'),
 			pos(width() / 2 - 115, height() / 2 + 32),
@@ -15,16 +22,17 @@ export const lose = () => {
 		if (recordSet) {
 			add([
 				text(`NUEVO RECORD`, {
-					size: 18,
+					size: 32,
 					font: 'sinko',
 				}),
 				pos(center().x, center().y - 64),
-				origin('center')
+				origin('center'),
+				color(255, 51, 51)
 			]);
 		}
 		add([
 			text(`Tu tiempo: ${lastScore.toFixed(1)}`, {
-				size: 18,
+				size: 19,
 				font: 'sinko',
 			}),
 			pos(center()),
@@ -32,7 +40,7 @@ export const lose = () => {
 		]);
 		add([
 			text(`Tu mejor tiempo: ${bestScore.toFixed(1)}`, {
-				size: 18,
+				size: 20,
 				font: 'sinko',
 			}),
 			pos(center().x, center().y + 32),

@@ -1,18 +1,23 @@
 import { constants } from '../common/constants.js';
+import { loadBackground } from '../components/background.js';
 import { livesIndicator } from '../components/livesIndicator.js';
 import { getScore, topTimer } from '../components/topTimer.js';
 
 export const game = () => {
 	scene('game', () => {
+		gravity(3500);
+
+		loadBackground();
+
 		play('begin');
 		// * GATO
 		const catPlayer = add([
 			sprite('Cat'),
 			pos(32, height() / 2),
 			area(),
-			scale(3),
-			body({ jumpForce: constants.JUMP_FORCE, weight: 1.5 }),
-			health(3),
+			scale(4),
+			body({ jumpForce: constants.JUMP_FORCE }),
+			health(constants.LIVES),
 			'catPlayer'
 		]);
 
@@ -68,8 +73,8 @@ export const game = () => {
 		const spawnGhost = () => {
 			add([
 				sprite('Ghost'),
-				scale(2.5),
-				area(),
+				scale(3.5),
+				area({ scale: 0.7 }),
 				pos(width(), height() - constants.FLOOR_HEIGHT),
 				origin('botleft'),
 				move(LEFT, constants.GHOST_SPEED),

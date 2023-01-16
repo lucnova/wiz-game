@@ -1,5 +1,5 @@
 const FLOOR_HEIGHT = 64;
-const JUMP_FORCE = 1042;
+const JUMP_FORCE = 1500;
 const GHOST_SPEED = 380;
 const LIVES = 3;
 
