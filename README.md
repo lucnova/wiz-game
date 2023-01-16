@@ -14,5 +14,6 @@ Setting up a server (Ex. [http-server](https://www.npmjs.com/package/http-server
 Graphics:
 [Cat Sprites](https://pipoya.itch.io/pipoya-free-rpg-character-sprites-nekonin) by ppeldo
 [Halloween Monsters](https://motionsorcery.itch.io/2d-animated-halloween-characters) by MotionSorcery
+[Background](https://ansimuz.itch.io/parallax-forest) by ansimuz
 
 Check them out.
