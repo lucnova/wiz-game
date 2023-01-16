@@ -1,5 +1,6 @@
 import { constants } from '../common/constants.js';
 import { livesIndicator } from '../components/livesIndicator.js';
+import { getScore, topTimer } from '../components/topTimer.js';
 
 export const game = () => {
 	scene('game', () => {
@@ -16,6 +17,7 @@ export const game = () => {
 		]);
 
 		livesIndicator();
+		topTimer();
 
 		const catJump = () => {
 			if (catPlayer.grounded()) {
@@ -38,6 +40,18 @@ export const game = () => {
 			shake();
 		});
 		catPlayer.on('death', () => {
+			const currentScore = getScore();
+
+			const bestScore = parseFloat(localStorage.getItem('bestScore')) || 0;
+			if (currentScore > bestScore) {
+				localStorage.setItem('bestScore', currentScore);
+				localStorage.setItem('recordSet', 1);
+			}
+			else {
+				localStorage.setItem('recordSet', 0);
+			}
+			localStorage.setItem('lastScore', currentScore);
+
 			wait(0.1, () => {
 				go('lose');
 			});

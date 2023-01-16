@@ -6,7 +6,7 @@ export const livesIndicator = () => {
 	for (let i = 0; i < lives; i++) {
 		add([
 			sprite('Heart'),
-			pos(32 + (i * spaceBetweenLives), 32),
+			pos(32 + (i * spaceBetweenLives), 16),
 			origin('center'),
 			area(),
 			scale(1),
@@ -22,7 +22,7 @@ export const livesIndicator = () => {
 			for (let i = 0; i < lives; i++) {
 				add([
 					sprite('Heart'),
-					pos(32 + (i * spaceBetweenLives), 32),
+					pos(32 + (i * spaceBetweenLives), 16),
 					origin('center'),
 					area(),
 					scale(1),
