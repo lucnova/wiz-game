@@ -1,4 +1,5 @@
 import { constants } from '../common/constants.js';
+import { livesIndicator } from '../components/livesIndicator.js';
 
 export const game = () => {
 	scene('game', () => {
@@ -11,7 +12,10 @@ export const game = () => {
 			scale(3),
 			body({ jumpForce: constants.JUMP_FORCE, weight: 1.5 }),
 			health(3),
+			'catPlayer'
 		]);
+
+		livesIndicator();
 
 		const catJump = () => {
 			if (catPlayer.grounded()) {
