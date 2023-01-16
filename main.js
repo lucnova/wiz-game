@@ -6,6 +6,9 @@ const FLOOR_HEIGHT = 64;
 const JUMP_FORCE = 1042;
 const GHOST_SPEED = 380;
 
+const buttonAudioContext = document.getElementById('audioCtx');
+buttonAudioContext.click();
+
 // Inicializar contexto de Kaboom
 kaboom({
 	global: true,
