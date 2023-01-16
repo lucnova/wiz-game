@@ -12,7 +12,7 @@ Download and extract.
 Serve in a server and open the URL on a browser.
 The easiest way is to install and use [http-server](https://www.npmjs.com/package/http-server) and navigate to localhost:8080
 or
-Play directly [here](https://lucnova.github.io/KaboomJS-Testing/).
+Play directly [here](https://wiz-g.netlify.app/).
 
 ## Credits
 
